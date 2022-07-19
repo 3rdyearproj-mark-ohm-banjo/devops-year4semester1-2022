@@ -1,48 +1,98 @@
-//จะใช้ public ip จากที่สร้างมาแล้วมาเชื่อมกับ firewall เท่านั้นๆ
+***Before get started*** 
+***Don't hesitate to click it, it's very important***
+Azure Firewall concept: https://docs.microsoft.com/en-us/azure/firewall/tutorial-firewall-deploy-portal-policy
+Azure Firewall rules: https://docs.microsoft.com/en-us/azure/firewall/rule-processing
+Youtube-Azure Firewall Step-By-Step: https://www.youtube.com/watch?v=_hn591fNW4U
+Explain Inbound and Outbound: https://www.bloggang.com/m/viewdiary.php?id=likecisco&month=05-2015&date=19&group=3&gblog=41
+
+
+... ... ... ... ... ... ... ... ... ... ... ... ... ...|... ... ... ... ... ... ... ... .._,,-~~~-,-,,_ 
+... ... ... ... ... ... ... ... ... ... ... ... ... ...|... ... ... ,,---,,_... ...,-~",-":__-,: : :"-,:::"'~,, 
+.,,-~~--,, ... ... ... ... ... ... ... ... ... ... ...|... ... ,~": : --,,:"~,,-"::::/:,-". . ."'~-,,: \,::::_,,"~-,,
+/: : : : : : :"'~-,,... ... ... ... ... ... ... ... ... |... ... /: : : : :~"'\,: \::__/:|o--,,. . . . .\,: ¯¯: : : : : :"-, 
+\: : : : : : : : : : :""~,,... ... ... ... ... ... ... |... ... .\: : : : : :,,-"~": : : "'~~-,:"'~-,,_|: : :,-"¯¯¯¯"-,:| 
+.'~,: : : : : : : : : : : : :"'~-,,_... ... ... ... ...|... ... .."-,_: ,-" : : : : : : : : : : : "~,--~": : (o~--,,_. . |:| 
+... ."'~-,,: : : : : : : : : : : : :"-,~--,... ... ... |... ... ... ...,/: : : : : : ,,--,-,~-,,: : :"~-,,: : :"~,___:"-/,/__ 
+... ... ...,"~"~--,,_,,-~"`"`": : "-,::"'~~--,,_..| ... ... ... ..|: : : ,: :,-". ,-"./. . . ."-,,_: : :"~-~": : : :"'-,,~,:"-,, 
+... ... .,/: : : : --,,:|: : : : : : : : :"-,,::::::::::::"~--,,_... ... \: : :|: /. .,/. . |. . . ,-".|. "~,,_____,,,,,__:\: : : : | 
+... ... .|: : : : : : : "|: : : : : : :,: : : :\:::::::::::::::::::::"'~~-,,"-,:|: |. /. . . .|. .,-". . |. ,-"'. \. . .,/|. . . .",:\: : ,/ 
+... ... ..\, : : : : : ,/ : : : : : : :|: : : ,/::::::::::::::::::::::::::::::::::"\: "-,,___,\,/___,,\/___. |,-". |. . . ,/.|: |,~" 
+... ... ... ",-,,,__/: : : : : : :,/,_~"-::::::::::::::::::::::::::::::::… : : : : : : : : : "'~,,,/.,,~". ,/: / 
+... ... ... /: : : : :"-,,___,,-": : ,"-,-:::::::::::::::::::::::::::::::::::… : : : : : : : : : : : : : : "-"__,-":,-" 
+... ... ... '\,_: : : : : : /-,,___,,"~-----~~~~,~---,,__:::::::::::… : : : : : : : __,,--~"~,,___,,-" 
+... ... ... ... ."'~---~"... ... ... ... ... ... ...|---~"::::"'~-::::::::::::::::,/: : : : : : : : : :\"~,, 
+... ... ... ... ... ... ... ... ... ... ... ... ... .|::::::::::::::::::::::::::::,,": : : : : : : : : : : |:::::"-,, 
+... ... ... ... ... ... ... ... ... ... ... ... ... .|:::::::::::::::::::::::,,-": : : : : : : : : : : : :,|:::::::::"-, 
+... ... ... ... ... ... ... ... ... ... ... ... ... .|::::::::::_,,,--~~": : : : : : : : : : : : : : :,/::::::::::::::\, 
+... ... ... ... ... ... ... ... ... ... ... ... ... .|----~~" : : : : : : : : : : : : : : : : : : : :,/::::::::::::::::::\, 
+... ... ... ... ... ... ... ... ... ... ... ... ... .|: : : : : : : : : : : : : : : : : : : : : : :,-,"::::::::::::::::::::::\ 
+... ... ... ... ... ... ... ... ... ... ... ... ... |: : : : : : : : : : : : : : : : : : : _,,~"SL'\,::::::::::::::::::::::\ 
+... ... ... ... ... ... ... ... ... ... ... ... ... |: : : : : : : : : : : : : : : : :,,-"... ... ... .\:::::::::::::::::::::::\ 
+... ... ... ... ... ... ... ... ... ... ... ... ... |: : : : : : : : : : : :_,,--~"... ... ... ... ...\:::::::::::::::::::::::\
+
+************************************
+
+//จะใช้ public ip จากที่สร้างมาแล้วมาเชื่อมกับ firewall เท่านั้น  
+//resource ทั้งหมดที่สร้างจะต้องอยู่ใน Resource group ที่สร้างขึ้น 
+//ใน 1 Resource group จะมี firewall ได้แค่ 1 ตัวเท่านั้น
 1.สร้าง Resource group //(Asia Pacific)East Asia  //firewall-test
-2.สร้าง vnet
-3.สร้าง public ip address
-//2.สร้าง vnet  //vnet-test
+2.สร้าง vnet  //vnet-test
+  //เพิ่ม subnet เพื่อเตรียมทำ firewall 
   2.1.เพิ่ม subnet 10.0.1.0/24 name= AzureFirewallSubnet
-            10.0.2.0/24 name= workload
+                 10.0.2.0/24 name= workload
    //subnet จะปล่อย private ip ใส่ตัวนั้นๆ
-default 10.0.0.0/24
-AzureFirewallSubnet  10.0.1.0/24  //private ip: 10.0.1.4  public ip: 20.239.122.53
-workload  10.0.2.0/24
+   //subnet default 10.0.0.0/24 จะลบหรือปล่อยไว้ก็ได้
+//#List only# AzureFirewallSubnet  subnet: 10.0.1.0/24  //private ip: 10.0.1.4  //public ip: 20.239.122.53
+//#List only# workload subnet: 10.0.2.0/24
 
-4.สร้าง firewall
-firewall สามารถสร้างได้จาก vnet หรือ firewall เองโดยที่ถ้าสร้างจาก firewall เอง
-เราต้องกำหนด subnet ใน vnet ที่ใช้ชื่อว่า  AzureFirewallSubnet หรือจะสร้างใหม่ทั้ง vnet
-และ firewall ใน firewall service ก็ได้ (ทำอันนี้)
-5.สร้าง Route tables
+3.สร้าง public ip address โดยใช้ค่าทุกอย่างเป็น default ตั้งชื่อด้วย เพื่อเป็น public ip ของเรา
 
---Route tables--
-เลือก subnet กด associate ใส่ subnet ของ vm หรือ aks เข้าไป
-เลือก Routes กด Add
-   Route name: fw-route
-   Address prefis des: Ip address
-   Destination IP addresses/CIDR ranges: 0.0.0.0/0
-   Next hop type: Virtual appliance
-   Next hop address: 10.0.1.4  //firewallPrivateIp
+4.สร้าง firewall  
+//firewall สามารถสร้างได้จาก vnet หรือ firewall service เอง ซึ่งเราจะสร้างจาก firewall service
+//ใน firewall service นั้นสามารถสร้างใหม่ได้ทั้ง vnet และ firewall ได้
+  4.1.เพิ่ม subnet ใน vnet ที่ชื่อว่า AzureFirewallSubnet (ทำไปแล้วในขั้นตอนที่ 2.1)
+  4.2.สร้าง firewall โดยที่ Firewall tier: Standard
+                         Firewall management: Use Firewall rules (classic) to manage this firewall
+                         Choose a virtual network: Use existing
+                         virtual network: ใส่ vnet เราลงไป
+                         public ip address: ใส่ public ip เราลงไป
+                         Forced tunneling: disabled
+
+5.สร้าง Route table โดยใช้ค่าทุกอย่างเป็น default ตั้งชื่อด้วย เพื่อ route ไปหา private ip และ subnet ของ service อื่นๆ  
+  5.1.เข้าไปใน route table เพื่อทำการ config
+  --Route tables--
+      เลือก Routes กด Add
+         Route name: fw-route
+         Address prefis des: Ip address
+         Destination IP addresses/CIDR ranges: 0.0.0.0/0
+         Next hop type: Virtual appliance
+         Next hop address: 10.0.1.4  //firewallPrivateIp
+      เลือก subnet กด associate ใส่ subnet ของ vm หรือ aks เข้าไป  //ระวังเกิดปัญหากับ firewall ต้องไปตั้งค่า rule ด้วย เช็คดีๆก่อนทำอันนี้
+                                                               //ใน terraform ไม่ได้เขียนไว้เพราะ azurerm_route_table มันไม่มี + มันจะเกิดปัญหากับ aks ต้องทำแบบ manual เอง
+                                                               
+6.ตั้งค่า firewall rules โดยเข้าไปที่ service firewall แล้วกดที่ rules
+  มี rule 3 แบบ NAT(DNAT) rule, Network rule และ Application rule
+  config ตามได้
 
 --Firewall rule--
 //Inbound port, port ขาเข้า ต้องเปิด 80 443 22 3000 
-NAT(DNAT) rule Traffic that arrives to the firewall’s public IP will be destination-translated to the NGINX internal load-balancer’s IP address which in our setup is private (10.240.0.42).
+-NAT(DNAT) rule-  //Traffic that arrives to the firewall’s public IP will be destination-translated to the NGINX internal load-balancer’s IP address which in our setup is private (10.240.0.42).
 name: dnat-rule 
 Priority: 200  
 Protocol: TCP UTP
 Source: type Ip address
 Source: *
-Destination Addres: 20.239.122.53 //firewallPublicIp
+Destination Addres: 20.239.122.53  //firewallPublicIp
 Destination Ports: 80	
-Translated address: 10.0.2.4 //vm or ingress PrivateIp => 10.0.2.106
+Translated address: 10.0.2.4  //vm or ingress PrivateIp => 10.0.2.106
 Translated port: 80
+--------------------
 
-cert-manager-46902 2379     
-27017-mongodb atlas   8443-webhook-ingress-nginx-controller  58452-backlogs
+//cert-manager-46902 2379     
+//27017-mongodb atlas   8443-webhook-ingress-nginx-controller  58452-backlogs
 //L4-network Outbound port, port ขาออก ต้องเปิด 80 443 22 27017
 //เป็นการกำหนดว่าให้ใช้ port ใน vm หรือ aks ไหนได้บ้าง เป็นพวก download ข้อมูลจากที่อื่นหรือ login git registry
-Network rule — Egress traffic from the AKS cluster will be allowed to ANY
+-Network rule-  //Egress traffic from the AKS cluster will be allowed to ANY
 IP Addresses
 name: network-rule 
 Priority: 200  
@@ -53,12 +103,12 @@ Source: *
 Destination type: Ip address
 Destination Addres: *
 Destination Ports: 80,443,22,27017,46902,2379
-
+--------------------
 
 
 //ยังไม่ได้ใช้เลย
 //L5-application Outbound port, port ขาออก ต้องเปิด 80 443 22
-Application rule — Internet clients will be allowed to reach the DNS name attached to the firewall’s public IP.
+-Application rule-  //Internet clients will be allowed to reach the DNS name attached to the firewall’s public IP.-
 Target FQDNs
 name: Allow-smb
 Priority: 200  
@@ -67,7 +117,7 @@ Source: type Ip address
 Source: 10.0.2.0/24  //vm subnet
 Protocol Port: http, https
 Target FQDNs: sharemybook4.ddns.net
-
+--------------------
 
 
 

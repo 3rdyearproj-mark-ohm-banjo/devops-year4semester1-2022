@@ -1,4 +1,4 @@
-public cloud เมื่อสร้าง service loadbalancer ตัว cloud จะสร้าง loadbalancer ขว้างหน้าเอาไว้ด้วย
+public cloud เมื่อสร้าง service loadbalancer ตัว cloud จะสร้าง loadbalancer ขวางหน้าเอาไว้ด้วย
 Standard B2s
 2 vcpus, 4 GiB memory
 
