@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/punthanat/int365-client:dev
+          image: ghcr.io/3rdyearproj-mark-ohm-banjo/int365-client:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 80

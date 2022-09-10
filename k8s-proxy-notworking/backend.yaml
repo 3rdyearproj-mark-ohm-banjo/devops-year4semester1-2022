@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/punthanat/int365-backend:dev
+          image: ghcr.io/3rdyearproj-mark-ohm-banjo/int365-backend:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

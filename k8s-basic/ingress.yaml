@@ -11,7 +11,7 @@ metadata:
     nginx.org/client-max-body-size: "5m"
 spec:
   rules:
-    - host: sharemybook4.ddns.net
+    - host: sharemybook.ddns.net
       http:
         paths:
           - path: /?(.*)
