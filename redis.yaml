@@ -1,7 +1,7 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: redis
+  name: redis-config
   namespace: smb-workload
 data:
   maxmemory: 2mb
