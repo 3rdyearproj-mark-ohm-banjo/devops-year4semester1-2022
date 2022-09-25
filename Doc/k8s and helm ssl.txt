@@ -135,7 +135,7 @@ helm uninstall sharemybook --namespace=smb-workload
 cicd commit id เปลี่ยนเสมอ -k8s11-2.15.00
 
 ---------------------------------------
-
+kubectl apply -f redis.yaml
 
 
 ░░▄▀░░░░░░░░░░░░░░░▀▀▄▄░░░░░ 
