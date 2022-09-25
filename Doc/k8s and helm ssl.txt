@@ -136,7 +136,7 @@ cicd commit id เปลี่ยนเสมอ -k8s11-2.15.00
 
 ---------------------------------------
 kubectl apply -f redis.yaml
-
+kubectl --namespace=smb-workload exec -it redis-deployment-75754dc7f5-gfmsr -- redis-cli
 
 ░░▄▀░░░░░░░░░░░░░░░▀▀▄▄░░░░░ 
 ░░▄▀░░░░░░░░░░░░░░░░░░░░▀▄░░░ 
