@@ -1,3 +1,4 @@
+env: dev
 namespace: smb-workload
 imagePullSecrets: registry-github
 frontend:
