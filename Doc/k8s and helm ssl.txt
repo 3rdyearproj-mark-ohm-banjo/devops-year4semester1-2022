@@ -6,7 +6,7 @@ Standard B2s
 1.สร้าง k8s cluster
 2.เข้าไปที่ bash
 3.get credentials เพื่อ authen เข้า API โดยใช้ .kube/config หรือเรียกว่า kube config ใช้อันไหนก็ได้มี 2 อัน อันที่ 2 ใช้เมื่อมี aks ซ้ำ ป้องกันการเกิด error ได้
-  az aks get-credentials --resource-group smb-resource --name smb-cluster 
+  az aks get-credentials --resource-group smb-resource --name smb-cluster
   az aks get-credentials --resource-group smb-resource --name smb-cluster --overwrite-existing
 4.cat /home/punthanat/.kube/config  //เข้าไปใส่ใน lens
 5.ทำ ssh-keygen และ login git registry ด้วย
@@ -17,7 +17,7 @@ cat ~/.ssh/id_rsa.pub
 
 
 -Login to GitHub registry-
-6.export TOKEN= เอาค่าจากการ generated token ใน git ตัวเองมาใส่ ติ๊กที่  write:packages อย่างเดียวพอ    //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
+6.export TOKEN= เอาค่าจากการ generated token ใน git ตัวเองมาใส่ ติ๊กที่  write:packages อย่างเดียวพอ    //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
 7.export GITHUB_USER= ชื่อ username ใน git เรา  //punthanat
 8.echo $TOKEN | docker login ghcr.io --password-stdin --username $GITHUB_USER  //ใส่ไปเลยตรงๆ ไม่ต้องแก้
 
