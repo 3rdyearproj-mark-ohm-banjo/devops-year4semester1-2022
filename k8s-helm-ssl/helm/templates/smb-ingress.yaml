@@ -9,8 +9,12 @@ metadata:
     {{ $key }}: {{ $value | quote }}
   {{- end }}
   {{- end }}
-
+  
 spec:
+  tls:
+  - hosts:
+    - {{ .Values.ingress.host }}
+    secretName: tls-secret
   rules:
     - host: {{ .Values.ingress.host }}
       http:
@@ -36,4 +40,3 @@ spec:
                 name: redis-config
                 port:
                   number: 6379
-          
