@@ -17,7 +17,7 @@ cat ~/.ssh/id_rsa.pub
 
 
 -Login to GitHub registry-
-6.export TOKEN= เอาค่าจากการ generated token ใน git ตัวเองมาใส่ ติ๊กที่  write:packages อย่างเดียวพอ    //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
+6.export TOKEN= เอาค่าจากการ generated token ใน git ตัวเองมาใส่ ติ๊กที่  write:packages อย่างเดียวพอ    //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
 7.export GITHUB_USER= ชื่อ username ใน git เรา  //punthanat
 8.echo $TOKEN | docker login ghcr.io --password-stdin --username $GITHUB_USER  //ใส่ไปเลยตรงๆ ไม่ต้องแก้
 
