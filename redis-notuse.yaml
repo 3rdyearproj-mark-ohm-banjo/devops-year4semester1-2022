@@ -50,7 +50,7 @@ metadata:
   namespace: smb-workload
 spec:
   # type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 6379
   selector:
