@@ -102,6 +102,15 @@ Source3: https://cert-manager.io/docs/installation/helm/#installing-with-helm
 
 
 
+---Install Redis cache by using Azure Cache for Redis, make it via https://portal.azure.com---
+---This service quite take a long time to do around "40 minute"---
+Source1: https://www.learmoreseekmore.com/2021/12/use-azure-cache-for-redis-in-nestjs-application.html
+Source2: https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-nodejs-get-started
+----------------------------------------------------------------------------
+
+
+
+
 ---Finally---
 1.Test your app
 2.Thank you naja for your patient to do this.
