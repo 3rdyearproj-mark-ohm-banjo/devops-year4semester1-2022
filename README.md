@@ -26,6 +26,18 @@ helm upgrade -f k8s-helm-ssl/helm-values/values-smb-dev.yaml --set extraEnv.COMM
 helm uninstall sharemybook --namespace=smb-workload 
 ```
 
+<br>
+
+Azure CLI
+
+```bash
+az login
+terraform init   //ใช้ตอนแรกสุด
+terraform init -reconfigure    //ใช้ตอนที่มีconfigใหม่ๆเพิ่มขึ้นมา
+terraform plan     //ตรวจสอบการทำงาน
+terraform apply      
+terraform destroy
+```
 
 ░░░░░░░░░░░░░░░░░░░░░▄▀░░▌  <br>
 ░░░░░░░░░░░░░░░░░░░▄▀▐░░░▌  <br>
