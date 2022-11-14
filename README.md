@@ -32,6 +32,10 @@ helm uninstall sharemybook --namespace=smb-workload
 
 #  Azure CLI Terraform
 
+```
+az login
+```
+
 https://acloudguru.com/blog/engineering/the-ultimate-terraform-cheatsheet <br>
 คำสั่งที่ใช้บ่อย
 ```
