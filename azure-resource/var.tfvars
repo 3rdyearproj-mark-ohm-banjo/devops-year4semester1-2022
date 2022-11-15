@@ -90,6 +90,14 @@ firewall = {
         translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
         translated_port    = 3000
       }
+      rule5 = {
+        name               = "dnat-6379"
+        protocols          = ["TCP", "UDP"]
+        source_addresses   = ["*"]
+        destination_ports  = ["6379"]
+        translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
+        translated_port    = 6379
+      }
     }
   }
   # network
@@ -102,7 +110,7 @@ firewall = {
       protocols             = ["TCP", "UDP"]
       source_addresses      = ["*"]
       destination_addresses = ["*"]
-      destination_ports     = ["80", "443", "22", "27017", "46902", "2379", "8443"]
+      destination_ports     = ["80", "443", "22", "27017", "46902", "2379", "8443","6379"]
     }
 
   }
