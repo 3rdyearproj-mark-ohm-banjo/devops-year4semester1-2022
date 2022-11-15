@@ -3,7 +3,7 @@ module "aks" {
   version             = "4.16.0"
   resource_group_name = var.rg_name_real
   cluster_name        = "${var.rg_name}-cluster"
-  kubernetes_version  = "1.22.6"
+  kubernetes_version  = "1.23.12"
   prefix              = "prefix"
 
   network_plugin  = "azure" //Azure CNI
