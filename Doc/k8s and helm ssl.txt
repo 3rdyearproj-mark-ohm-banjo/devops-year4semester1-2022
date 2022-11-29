@@ -17,7 +17,7 @@ cat ~/.ssh/id_rsa.pub
 
 
 -Login to GitHub registry-
-6.export TOKEN= เอาค่าจากการ generated token ใน git ตัวเองมาใส่ ติ๊กที่  write:packages อย่างเดียวพอ    //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
+6.export TOKEN= เอาค่าจากการ generated token ใน git ตัวเองมาใส่ ติ๊กที่  write:packages อย่างเดียวพอ    //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
 7.export GITHUB_USER= ชื่อ username ใน git เรา  //punthanat
 8.echo $TOKEN | docker login ghcr.io --password-stdin --username $GITHUB_USER  //ใส่ไปเลยตรงๆ ไม่ต้องแก้
 
@@ -32,13 +32,13 @@ cat ~/.docker/config.json เราต้องเอาข้อมูลมา
 
 kubectl get secret --namespace=smb-workload เพื่อดูว่ามี secret ขึ้นมาจริงไหม
 kubectl describe secret registry-github --namespace=smb-workload ดูแบบละเอียด
-11.Clone your project and cd in your folder
+11.Clone your project devops and cd in your folder
 ----------------------------------------------------------------------------
 
 
 ---Using Nginx ingress controller for publish public IP and making ingress---
 1.kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
- // ทำ hosting โดยเอา ip จาก service loadbalancer ที่มันทำให้ เอาไปใส่ที่ no-ip.com
+ // ในกรณีที่ไม่ทำ firewall ให้ทำ hosting โดยเอา ip จาก service loadbalancer ที่มันทำให้ เอาไปใส่ที่ no-ip.com
 
 //kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.2.0/deploy/static/provider/cloud/deploy.yaml
 Source1: https://kubernetes.github.io/ingress-nginx/deploy/#azure
@@ -69,7 +69,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 1.ลบ service loadbalancer ของ nginx ingress controller ออก
 2.เอา public ip ของ firewall มาใส่ใน noip.com 
 3.แก้ firewall nat ตัว Translated address ใน terraform ซึ่งมันจะเป็น dummy อยู่ เอา ip pod ของ nginx-ingress มาใส่
-4.route table ใส่ subnet ของ subnet workload ลงไป
+4.route table ในช่อง subnets ตรง virtual network ให้ใส่ smb-vnet และ subnet ให้ใส่ workload ลงไป
 //ถ้าไม่ลบมันจะเกิด error ที่ยังหาวิธีแก้ไม่ได้  ติด Webhook ingress-nginx-admission
 5.kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 //ถ้าไม่ลบมันจะเกิด error ที่ยังหาวิธีแก้ไม่ได้ของ cert-manager
@@ -82,7 +82,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
   kubectl apply -f k8s-helm-ssl/cluster-issuer.yaml
 
 6.Deploy a TLS Ingress Resource or using helm to deploy all service โดยใช้คำสั่ง
-  helm install -f k8s-helm-ssl/helm-values/values-smb-dev.yaml sharemybook k8s-helm-ssl/helm --namespace=smb-workload
+  helm install -f k8s-helm-ssl/helm-values/values-smb-prod.yaml sharemybook k8s-helm-ssl/helm --namespace=smb-workload
 
 -Get a new certificate for updating certifiacate-
 kubectl describe certificate tls-secret --namespace=smb-workload

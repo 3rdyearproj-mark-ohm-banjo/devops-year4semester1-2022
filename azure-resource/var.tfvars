@@ -63,7 +63,7 @@ firewall = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["*"]
         destination_ports  = ["80"]
-        translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
+        translated_address = "10.0.2.107" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
         translated_port    = 80
       }
       rule2 = {
@@ -71,7 +71,7 @@ firewall = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["*"]
         destination_ports  = ["443"]
-        translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
+        translated_address = "10.0.2.107" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
         translated_port    = 443
       }
       rule3 = {
@@ -79,7 +79,7 @@ firewall = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["*"]
         destination_ports  = ["22"]
-        translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
+        translated_address = "10.0.2.107" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
         translated_port    = 22
       }
       rule4 = {
@@ -87,7 +87,7 @@ firewall = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["*"]
         destination_ports  = ["3000"]
-        translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
+        translated_address = "10.0.2.107" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
         translated_port    = 3000
       }
       rule5 = {
@@ -95,7 +95,7 @@ firewall = {
         protocols          = ["TCP", "UDP"]
         source_addresses   = ["*"]
         destination_ports  = ["6379"]
-        translated_address = "10.0.2.97" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
+        translated_address = "10.0.2.107" //Don't forgot to change (vm or ingress PrivateIp => 10.0.2.106)
         translated_port    = 6379
       }
     }
