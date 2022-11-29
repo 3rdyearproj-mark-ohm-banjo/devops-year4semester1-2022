@@ -69,7 +69,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 1.ลบ service loadbalancer ของ nginx ingress controller ออก
 2.เอา public ip ของ firewall มาใส่ใน noip.com 
 3.แก้ firewall nat ตัว Translated address ใน terraform ซึ่งมันจะเป็น dummy อยู่ เอา ip pod ของ nginx-ingress มาใส่
-4.route table ในช่อง subnets ตรง virtual network ให้ใส่ smb-vnet และ subnet ให้ใส่ workload ลงไป
+4.route table ในช่อง subnets ให้กด +Associate ตรง virtual network ให้ใส่ smb-vnet และ subnet ให้ใส่ workload ลงไป
 //ถ้าไม่ลบมันจะเกิด error ที่ยังหาวิธีแก้ไม่ได้  ติด Webhook ingress-nginx-admission
 5.kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 //ถ้าไม่ลบมันจะเกิด error ที่ยังหาวิธีแก้ไม่ได้ของ cert-manager
@@ -86,6 +86,7 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 
 -Get a new certificate for updating certifiacate-
 kubectl describe certificate tls-secret --namespace=smb-workload
+kubectl get secret tls-secret -oyaml --namespace=smb-workload
 kubectl delete secret tls-secret --namespace=smb-workload
 
 
@@ -103,7 +104,7 @@ Source3: https://cert-manager.io/docs/installation/helm/#installing-with-helm
 
 
 ---Install Redis cache by using Azure Cache for Redis, make it via https://portal.azure.com---
----This service quite take a long time to do around "40 minute"---
+---This service quite take a long time to do around "20 minute"---
 Source1: https://www.learmoreseekmore.com/2021/12/use-azure-cache-for-redis-in-nestjs-application.html
 Source2: https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-nodejs-get-started
 ----------------------------------------------------------------------------
@@ -144,8 +145,7 @@ helm uninstall sharemybook --namespace=smb-workload
 cicd commit id เปลี่ยนเสมอ -k8s11-2.15.00
 
 ---------------------------------------
-//kubectl apply -f redis.yaml
-//kubectl --namespace=smb-workload exec -it redis-deployment-75754dc7f5-695xl -- redis-cli
+
 
 ░░▄▀░░░░░░░░░░░░░░░▀▀▄▄░░░░░ 
 ░░▄▀░░░░░░░░░░░░░░░░░░░░▀▄░░░ 
